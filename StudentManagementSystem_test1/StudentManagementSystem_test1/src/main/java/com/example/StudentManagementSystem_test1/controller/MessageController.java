@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/Messages")
+@RequestMapping("/api/messages")
 @CrossOrigin(origins = "http://localhost:5173")
 public class MessageController {
     @Autowired
