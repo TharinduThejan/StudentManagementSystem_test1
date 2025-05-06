@@ -1,26 +1,37 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { addStudent } from "../api";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { getStudentById, updateStudent } from "../api";
 
-const AddStudent = () => {
+const EditStudent = () => {
+  const { id } = useParams();
   const [student, setStudent] = useState({ name: "", email: "", course: "" });
   const navigate = useNavigate();
+
+  useEffect(() => {
+    async function fetchStudent() {
+      const res = await getStudentById(id);
+      setStudent(res.data);
+    }
+    fetchStudent();
+  }, [id]);
+
   const handleChange = (e) => {
     setStudent({ ...student, [e.target.name]: e.target.value });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await addStudent(student);
+    await updateStudent(id, student);
     navigate("/");
   };
+
   return (
-    <div className="p-6 rounded shadow bg-opacity: 0">
-      <h2 className="mb-4 text-2xl font-bold">Add New Student</h2>
+    <div className="p-6 mt-4 rounded shadow bg-black/40">
+      <h2 className="mb-4 text-2xl font-semibold">Edit Student</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"
           name="name"
-          placeholder="Name"
           value={student.name}
           onChange={handleChange}
           className="w-full px-3 py-2 border rounded"
@@ -29,7 +40,6 @@ const AddStudent = () => {
         <input
           type="email"
           name="email"
-          placeholder="Email"
           value={student.email}
           onChange={handleChange}
           className="w-full px-3 py-2 border rounded"
@@ -38,21 +48,20 @@ const AddStudent = () => {
         <input
           type="text"
           name="course"
-          placeholder="Course"
           value={student.course}
           onChange={handleChange}
           className="w-full px-3 py-2 border rounded"
           required
         />
-
         <button
           type="submit"
-          className="px-4 py-2 text-white bg-green-600 rounded hover:bg-green-700"
+          className="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
         >
-          Add Student
+          Update Student
         </button>
       </form>
     </div>
   );
 };
-export default AddStudent;
+
+export default EditStudent;

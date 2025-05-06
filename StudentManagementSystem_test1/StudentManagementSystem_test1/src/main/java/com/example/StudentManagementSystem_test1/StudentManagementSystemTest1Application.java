@@ -1,5 +1,6 @@
 package com.example.StudentManagementSystem_test1;
 
+import com.example.StudentManagementSystem_test1.repository.MessagesRepo;
 import com.example.StudentManagementSystem_test1.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -11,6 +12,7 @@ public class StudentManagementSystemTest1Application implements CommandLineRunne
 
 	@Autowired
 	private StudentRepository repository;
+	private MessagesRepo messagesRepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(StudentManagementSystemTest1Application.class, args);
